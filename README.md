@@ -2,6 +2,8 @@
 
 Modified MagicMirror2 weatherforecast including snow amount only for winter mounths
 
+https://forum.magicmirror.builders/topic/12201/snow-amount-on-weather-forecast
+
 <img src=https://github.com/hangorazvan/hourlyforecast/blob/master/preview.png>
 
 After duplicate weatherforecast from <i>module/default</i> folder to <i>module</i> folder, 
