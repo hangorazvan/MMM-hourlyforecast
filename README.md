@@ -1,3 +1,3 @@
 # hourlyforecast
 
-Modified weatherforecast
+Modified MagicMirror2 weatherforecast
