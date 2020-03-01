@@ -21,9 +21,15 @@ and if exist comment the line <i>params += "&cnt=" + (((this.config.maxNumberOfD
 Then put in config.js
 
 {
-		module: "hourlyforecast",
-		position: "top_right",
-		config: {
-			// See 'Configuration options' for more information.
-		}
+
+     module: "hourlyforecast",
+
+     position: "top_right",
+
+     config: {
+
+          // See 'Configuration options' for more information.
+
+     }
+     
 }
