@@ -6,14 +6,14 @@ Modified MagicMirror2 weatherforecast including snow amount only for winter moun
 
 After duplicate weatherforecast from module/default folder to module folder, 
 
-<i>change weatherforecast.js to hourlyforecast.js,</i>
+change <i>weatherforecast.js</i> to <i>hourlyforecast.js,</i>
 
-same for the  css file, 
+same for the css file, 
 
-change inside js file Module.register("weatherforecast", to Module.register("hourlyforecast",
+change inside js file <i>Module.register("weatherforecast",</i> to <i>Module.register("hourlyforecast",</i>
 
-forecastEndpoint: "forecast/daily" to forecastEndpoint: "forecast", 
+<i>forecastEndpoint: "forecast/daily"</i> to <i>forecastEndpoint: "forecast",</i>
 
-day = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format("ddd"); to day = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format("HH:mm"); 
+<i>day = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format("ddd");</i> to <i>day = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format("HH:mm");</i>
 
-and if exist comment the line params += "&cnt=" + (((this.config.maxNumberOfDays < 1) || (this.config.maxNumberOfDays > 121)) ? 40 : this.config.maxNumberOfDays);
+and if exist comment the line <i>params += "&cnt=" + (((this.config.maxNumberOfDays < 1) || (this.config.maxNumberOfDays > 121)) ? 40 : this.config.maxNumberOfDays);</i>
