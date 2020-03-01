@@ -15,18 +15,18 @@ Module.register("hourlyforecast",{
 		locationID: config.locationID,
 		appid: config.appid,
 		units: config.units,
-		maxNumberOfDays: 7,
-		showRainAmount: false,
+		maxNumberOfDays: 4,
+		showRainAmount: true,
 		showSnowAmount: true, // only for winter months
 		updateInterval: 10 * 60 * 1000, // every 10 minutes
 		animationSpeed: 1000,
 		timeFormat: config.timeFormat,
 		lang: config.language,
 		decimalSymbol: config.decimal,
-		fade: true,
+		fade: false,
 		fadePoint: 0.25, // Start on 1/4th of the list.
-		colored: false,
-		scale: false,
+		colored: true,
+		scale: true,
 
 		initialLoadDelay: 2500, // 2.5 seconds delay. This delay is used to keep the OpenWeather API happy.
 		retryDelay: 2500,
@@ -35,7 +35,7 @@ Module.register("hourlyforecast",{
 		apiBase: "https://api.openweathermap.org/data/",
 		forecastEndpoint: "forecast",
 
-		appendLocationNameToHeader: true,
+		appendLocationNameToHeader: false,
 		calendarClass: "calendar",
 		tableClass: "xsmall",
 
