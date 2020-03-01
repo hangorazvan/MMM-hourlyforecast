@@ -6,7 +6,7 @@ Modified MagicMirror2 weatherforecast including snow amount only for winter moun
 
 After duplicate weatherforecast from module/default folder to module folder, 
 
-"change weatherforecast.js to hourlyforecast.js,"
+<i>change weatherforecast.js to hourlyforecast.js,</i>
 
 same for the  css file, 
 
