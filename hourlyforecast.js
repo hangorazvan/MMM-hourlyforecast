@@ -189,8 +189,8 @@ Module.register("hourlyforecast",{
 				row.appendChild(rainCell);
 			}
 
-			var nw = new Date();
-        	if ((nw.getMonth() >= 0 && nw.getMonth() <= 2) || (nw.getMonth() >= 10 && nw.getMonth() <= 11)) {
+			var winter = moment().format('MM');
+    	    if ((winter >= '01' && winter <= '03') || (winter >= '11' && winter <= '12')) {
 				if (this.config.showSnowAmount) {
 					var snowCell = document.createElement("td");
 					if (isNaN(forecast.snow)) {
