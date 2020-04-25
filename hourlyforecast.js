@@ -76,7 +76,7 @@ Module.register("hourlyforecast",{
 
 	// Define required scripts.
 	getStyles: function() {
-		return ["weather-icons.css", "hourlyforecast.css"];
+		return ["weather-icons.css"];
 	},
 
 	// Define required translations.
@@ -189,8 +189,8 @@ Module.register("hourlyforecast",{
 				row.appendChild(rainCell);
 			}
 
-			var winter = moment().format('MM');
-    	    if ((winter >= '01' && winter <= '03') || (winter >= '11' && winter <= '12')) {
+			var winter = moment().format("MM");
+    	    if ((winter >= "01" && winter <= "03") || (winter >= "11" && winter <= "12")) {
 				if (this.config.showSnowAmount) {
 					var snowCell = document.createElement("td");
 					if (isNaN(forecast.snow)) {
@@ -228,7 +228,6 @@ Module.register("hourlyforecast",{
 		if (this.config.appendLocationNameToHeader) {
 			return this.data.header + " " + this.fetchedLocationName;
 		}
-
 		return this.data.header;
 	},
 
@@ -283,7 +282,6 @@ Module.register("hourlyforecast",{
 						self.config.forecastEndpoint = "forecast";
 						Log.warn(self.name + ": Your AppID does not support long term forecasts. Switching to fallback endpoint.");
 					}
-
 					retry = true;
 				} else {
 					Log.error(self.name + ": Could not load weather.");
@@ -319,7 +317,7 @@ Module.register("hourlyforecast",{
 
 		params += "&units=" + this.config.units;
 		params += "&lang=" + this.config.lang;
-//		params += "&cnt=" + (((this.config.maxNumberOfDays < 1) || (this.config.maxNumberOfDays > 121)) ? 40 : this.config.maxNumberOfDays);
+		params += "&cnt=" + (((this.config.maxNumberOfDays < 1) || (this.config.maxNumberOfDays > 128)) ? 40 : this.config.maxNumberOfDays);
 		params += "&APPID=" + this.config.appid;
 
 		return params;
@@ -359,8 +357,8 @@ Module.register("hourlyforecast",{
 			var day;
 			var hour;
 			if(!!forecast.dt_txt) {
-				day = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format("HH:mm");
-				hour = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format("HH:mm");
+				day = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format("HH [h ]");
+				hour = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format("H");
 			} else {
 				day = moment(forecast.dt, "X").format("ddd");
 				hour = moment(forecast.dt, "X").format("H");
@@ -477,7 +475,7 @@ Module.register("hourlyforecast",{
 		});
 
 		//If no rain this day return undefined so it wont be displayed for this day
-		if (daysForecasts.length == 0) {
+		if (daysForecasts.length === 0) {
 			return undefined;
 		}
 
@@ -503,7 +501,7 @@ Module.register("hourlyforecast",{
 		});
 
 		//If no snow this day return undefined so it wont be displayed for this day
-		if (daysForecasts.length == 0) {
+		if (daysForecasts.length === 0) {
 			return undefined;
 		}
 
