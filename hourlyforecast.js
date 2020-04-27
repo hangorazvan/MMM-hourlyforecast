@@ -1,7 +1,7 @@
 /* global Module */
 
 /* Magic Mirror
- * Module: WeatherForecast
+ * Module: HourlyForecast
  *
  * By Michael Teeuw http://michaelteeuw.nl
  * MIT Licensed.
