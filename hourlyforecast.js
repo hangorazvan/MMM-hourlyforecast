@@ -177,7 +177,7 @@ Module.register("hourlyforecast",{
 			if (this.config.showRainAmount) {
 				var rainCell = document.createElement("td");
 				if (isNaN(forecast.rain)) {
-					rainCell.innerHTML = "<span>nu plouă</span>";
+					rainCell.innerHTML = "<span>no rain</span>";
 				} else {
 					if(config.units !== "imperial") {
 						rainCell.innerHTML = parseFloat(forecast.rain).toFixed(1).replace(".", this.config.decimalSymbol) + " l/m&sup3;";
@@ -194,7 +194,7 @@ Module.register("hourlyforecast",{
 				if (this.config.showSnowAmount) {
 					var snowCell = document.createElement("td");
 					if (isNaN(forecast.snow)) {
-						snowCell.innerHTML = "<span>nu ninge</span>";
+						snowCell.innerHTML = "<span>no snow</span>";
 					} else {
 						if(config.units !== "imperial") {
 							snowCell.innerHTML = parseFloat(forecast.snow).toFixed(1).replace(".", this.config.decimalSymbol) + " mm";
@@ -357,7 +357,7 @@ Module.register("hourlyforecast",{
 			var day;
 			var hour;
 			if(!!forecast.dt_txt) {
-				day = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format("HH [h ]");
+				day = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format("HH:mm");
 				hour = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format("H");
 			} else {
 				day = moment(forecast.dt, "X").format("ddd");
