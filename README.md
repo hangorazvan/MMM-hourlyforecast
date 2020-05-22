@@ -20,16 +20,10 @@ change inside js file <i>Module.register("weatherforecast",</i> to <i>Module.reg
 
 Then put in config.js
 
-{
-
-     module: "hourlyforecast",
-
-     position: "top_right",
-
-     config: {
-
-          // See 'Configuration options' for more information.
-
-     }
-     
-}
+<br>{
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;module: "hourlyforecast",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;position: "top_right",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;config: {
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// See weatherforeast default module 'Configuration options' for more information.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br>}
