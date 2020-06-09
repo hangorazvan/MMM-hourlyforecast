@@ -37,7 +37,7 @@
 
 .hourlyforecast tr:nth-child(1) td:nth-child(1)::after {
   text-indent: 0;
-  content: "Acum";
+  content: "Now";
   display: block;
   line-height: initial;
   color: lime;
