@@ -6,6 +6,7 @@ https://forum.magicmirror.builders/topic/12201/snow-amount-on-weather-forecast
 
 <img src=https://github.com/hangorazvan/hourlyforecast/blob/master/preview.png>
 
+Use this module or modify yourself the default module.
 After duplicate weatherforecast from <i>module/default</i> folder to <i>module</i> folder, 
 
 change <i>weatherforecast.js</i> to <i>hourlyforecast.js,</i>
