@@ -51,6 +51,7 @@
     color: DarkKhaki;
 }
 
+.hourlyforecast .wi-day-cloudy-windy,
 .hourlyforecast .wi-cloudy-windy {
     color: skyblue;
 }
@@ -59,22 +60,27 @@
     color: powderblue;
 }
 
+.hourlyforecast .wi-day-showers,
 .hourlyforecast .wi-showers {
     color: skyblue;
 }
 
+.hourlyforecast .wi-day-rain,
 .hourlyforecast .wi-rain {
     color: dodgerblue;
 }
 
+.hourlyforecast .wi-day-thunderstorm,
 .hourlyforecast .wi-thunderstorm {
     color: royalblue;
 }
 
+.hourlyforecast .wi-day-snow,
 .hourlyforecast .wi-snow {
     color: snow;
 }
 
+.hourlyforecast .wi-day-fog,
 .hourlyforecast .wi-fog {
     color: white;
 }
@@ -83,6 +89,7 @@
     color: white;
 }
 
+.hourlyforecast .wi-alt-night-cloudy,
 .hourlyforecast .wi-night-cloudy {
     color: powderblue;
 }
