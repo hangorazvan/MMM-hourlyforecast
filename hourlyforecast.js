@@ -45,16 +45,16 @@ Module.register("hourlyforecast",{
 			"01d": "wi-day-sunny",
 			"02d": "wi-day-cloudy",
 			"03d": "wi-cloudy",
-			"04d": "wi-cloudy-windy",
-			"09d": "wi-showers",
-			"10d": "wi-rain",
-			"11d": "wi-thunderstorm",
-			"13d": "wi-snow",
-			"50d": "wi-fog",
+			"04d": "wi-day-cloudy-windy",
+			"09d": "wi-day-showers",
+			"10d": "wi-day-rain",
+			"11d": "wi-day-thunderstorm",
+			"13d": "wi-day-snow",
+			"50d": "wi-day-fog",
 			"01n": "wi-night-clear",
-			"02n": "wi-night-cloudy",
+			"02n": "wi-night-alt-cloudy",
 			"03n": "wi-night-cloudy",
-			"04n": "wi-night-cloudy",
+			"04n": "wi-night-cloudy-windy",
 			"09n": "wi-night-showers",
 			"10n": "wi-night-rain",
 			"11n": "wi-night-thunderstorm",
@@ -144,7 +144,7 @@ Module.register("hourlyforecast",{
 
 			var degreeLabel = "";
 			if (this.config.units === "metric" || this.config.units === "imperial") {
-				degreeLabel += "°";
+				degreeLabel += "&deg;";
 			}
 			if(this.config.scale) {
 				switch(this.config.units) {
