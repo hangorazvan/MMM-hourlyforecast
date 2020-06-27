@@ -26,6 +26,7 @@ Then put in config.js
 		module: "hourlyforecast",
 		position: "top_right",
 		config: {
+			forecastEndpoint: "forecast",
 			// See weatherforeast default module 'Configuration options' for more information.
 		}
 	}
