@@ -34,25 +34,25 @@ Then put in config.js
 
 Weather Forecast Snow Amounts
 
-after you duplicate the rain amount put above this code 
+after the rain amount in getDom put this code 
 
-			var winter = moment().format("MM");
-    	    if ((winter >= "01" && winter <= "03") || (winter >= "11" && winter <= "12")) {
-				if (this.config.showSnowAmount) {
-					var snowCell = document.createElement("td");
-					if (isNaN(forecast.snow)) {
-						snowCell.innerHTML = "<span>no snow</span>";
+		var winter = moment().format("MM");
+		if ((winter >= "01" && winter <= "03") || (winter >= "11" && winter <= "12")) {
+			if (this.config.showSnowAmount) {
+				var snowCell = document.createElement("td");
+				if (isNaN(forecast.snow)) {
+					snowCell.innerHTML = "<span>no snow</span>";
+				} else {
+					if(config.units !== "imperial") {
+						snowCell.innerHTML = parseFloat(forecast.snow).toFixed(1).replace(".", this.config.decimalSymbol) + " mm";
 					} else {
-						if(config.units !== "imperial") {
-							snowCell.innerHTML = parseFloat(forecast.snow).toFixed(1).replace(".", this.config.decimalSymbol) + " mm";
-						} else {
-							snowCell.innerHTML = (parseFloat(forecast.snow) / 25.4).toFixed(2).replace(".", this.config.decimalSymbol) + " in";
-						}
+						snowCell.innerHTML = (parseFloat(forecast.snow) / 25.4).toFixed(2).replace(".", this.config.decimalSymbol) + " in";
 					}
-					snowCell.className = "align-right xsmall snow";
-					row.appendChild(snowCell);
 				}
+				snowCell.className = "align-right xsmall snow";
+				row.appendChild(snowCell);
 			}
+		}
 
 on processWeather you add:
 
