@@ -32,7 +32,7 @@ Then put in config.js
 		}
 	}
 
-Weather Forecast Snow Amounts
+<b>Weather Forecast Snow Amounts</b>
 
 after the rain amount in getDom put this code 
 
