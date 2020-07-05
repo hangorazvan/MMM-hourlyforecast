@@ -17,7 +17,7 @@ change inside js file <i>Module.register("weatherforecast",</i> to <i>Module.reg
 
 <i>forecastEndpoint: "forecast/daily"</i> to <i>forecastEndpoint: "forecast",</i>
 
-<i>day = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format("ddd");</i> to <i>day = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format("HH:mm");</i>
+<i>day = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format("ddd");</i> to <i>day = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format(this.config.fullday);</i>
 
 Then put in config.js
 
@@ -27,7 +27,7 @@ Then put in config.js
 		position: "top_right",
 		config: {
 			forecastEndpoint: "forecast",
-			fullday: "ddd", // in case of falls back of using free API or "HH [h]" for hourly forecast
+			fullday: "HH [h]", // "ddd" in case of daily forecast falls back of using free API or "HH [h]" for hourly forecast
 			showSnowAmount: true, // only for winter months
 			// See weatherforeast default module 'Configuration options' for more information.
 		}
