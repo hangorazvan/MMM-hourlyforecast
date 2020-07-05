@@ -17,7 +17,9 @@ change inside js file <i>Module.register("weatherforecast",</i> to <i>Module.reg
 
 <i>forecastEndpoint: "forecast/daily"</i> to <i>forecastEndpoint: "forecast",</i>
 
-<i>day = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format("ddd");</i> to <i>day = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format(this.config.fullday);</i>
+<i>day = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format("ddd");</i>
+<br>to<br>
+<i>day = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format(this.config.fullday);</i>
 
 Then put in config.js
 
