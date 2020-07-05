@@ -27,6 +27,7 @@ Then put in config.js
 		position: "top_right",
 		config: {
 			forecastEndpoint: "forecast",
+			fullday: "ddd", // in case of falls back of using free API or "HH [h]" for hourly forecast
 			showSnowAmount: true, // only for winter months
 			// See weatherforeast default module 'Configuration options' for more information.
 		}
