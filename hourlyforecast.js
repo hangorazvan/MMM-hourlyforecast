@@ -34,6 +34,7 @@ Module.register("hourlyforecast",{
 		apiVersion: "2.5",
 		apiBase: "https://api.openweathermap.org/data/",
 		forecastEndpoint: "forecast",
+		fullday: "ddd", // "HH [h]" for hourly forecast
 
 		appendLocationNameToHeader: false,
 		calendarClass: "calendar",
@@ -366,7 +367,7 @@ Module.register("hourlyforecast",{
 			var day;
 			var hour;
 			if(!!forecast.dt_txt) {
-				day = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format("HH:mm");
+				day = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format(this.config.fullday);
 				hour = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format("H");
 			} else {
 				day = moment(forecast.dt, "X").format("ddd");
