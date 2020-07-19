@@ -270,7 +270,7 @@ Module.register("hourlyforecast",{
 		var numberOfDays;
 		if (this.config.forecastEndpoint === "forecast") {
 			numberOfDays = this.config.maxNumberOfDays < 1 || this.config.maxNumberOfDays > 5 ? 5 : this.config.maxNumberOfDays;
-			numberOfDays = numberOfDays * 8 - (Math.floor(new Date().getHours() / 3) % 8);
+			numberOfDays = numberOfDays * 8 - (Math.round(new Date().getHours() / 3) % 8);
 		} else {
 			numberOfDays = this.config.maxNumberOfDays < 1 || this.config.maxNumberOfDays > 17 ? 7 : this.config.maxNumberOfDays;
 		}
