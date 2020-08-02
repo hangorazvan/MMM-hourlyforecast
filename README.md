@@ -9,15 +9,14 @@ Do not make modification and do not replace the default, just add <i>disable: tr
 
 Then put in config.js
 
-
 	{
 		module: "hourlyforecast",
 		position: "top_right",
 		config: {
 			forecastEndpoint: "forecast",
-			fullday: "HH [h]", // "ddd" in case of daily forecast falls back of using free API or "HH [h]" for hourly forecast
-			showSnowAmount: true, // only for winter months
-			// See weatherforeast default module 'Configuration options' for more information.
+			fullday: "HH [h]", 	// "ddd" in case of daily forecast falls back of using free API or "HH [h]" for hourly forecast
+			showSnowAmount: true, 	// only for winter months
+						// See weatherforeast default module 'Configuration options' for more information.
 		}
 	}
 
