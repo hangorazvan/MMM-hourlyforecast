@@ -5,7 +5,7 @@ Modified MagicMirror2 weatherforecast including snow amount only for winter moun
 https://forum.magicmirror.builders/topic/12201/snow-amount-on-weather-forecast
 
 <img src=https://github.com/hangorazvan/hourlyforecast/blob/master/preview.png>
-o not make modification and do not replace the default, just add <i>disable: true</i> in config.js and use this one as 3rd party,
+Do not make modification and do not replace the default, just add <i>disable: true</i> in config.js and use this one as 3rd party,
 
 Then put in config.js
 
