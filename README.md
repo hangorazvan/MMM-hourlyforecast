@@ -5,21 +5,7 @@ Modified MagicMirror2 weatherforecast including snow amount only for winter moun
 https://forum.magicmirror.builders/topic/12201/snow-amount-on-weather-forecast
 
 <img src=https://github.com/hangorazvan/hourlyforecast/blob/master/preview.png>
-
-Use this module or modify yourself the default module.
-After duplicate weatherforecast from <i>module/default</i> folder to <i>module</i> folder, 
-
-change <i>weatherforecast.js</i> to <i>hourlyforecast.js,</i>
-
-same for the css file, 
-
-change inside js file <i>Module.register("weatherforecast",</i> to <i>Module.register("hourlyforecast",</i>
-
-<i>forecastEndpoint: "forecast/daily"</i> to <i>forecastEndpoint: "forecast",</i>
-
-<i>day = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format("ddd");</i>
-<br>to<br>
-<i>day = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format(this.config.fullday);</i>
+o not make modification and do not replace the default, just add <i>disable: true</i> in config.js and use this one as 3rd party,
 
 Then put in config.js
 
