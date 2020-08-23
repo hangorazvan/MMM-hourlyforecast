@@ -3,11 +3,12 @@ Module.register("hourlyforecast",{
 	defaults: {
 		location: config.location,
 		locationID: config.locationID,
+		lat: false,
+		lon: false,
 		appid: "...",
 		units: config.units,
 		maxNumberOfDays: 7,
-		showRainAmount: true,
-		showSnowAmount: true, // only for winter months
+		showRain_Snow: true, // snow show only in winter months
 		updateInterval: 10 * 60 * 1000, // every 10 minutes
 		animationSpeed: 1000,
 		timeFormat: config.timeFormat,
@@ -24,6 +25,9 @@ Module.register("hourlyforecast",{
 		apiVersion: "2.5",
 		apiBase: "https://api.openweathermap.org/data/",
 		forecastEndpoint: "forecast",
+		excludes: false,
+
+		fullday: "HH [h]" // "ddd" for forecast/daily
 
 		appendLocationNameToHeader: false,
 		calendarClass: "calendar",
@@ -75,9 +79,9 @@ Module.register("hourlyforecast",{
 	getDom: function() {
 		var wrapper = document.createElement("div");
 
-		if (this.config.appid === "" || this.config.appid === "YOUR_OPENWEATHER_API_KEY") {
+		if (this.config.appid === "") {
 			wrapper.innerHTML = "Please set the correct openweather <i>appid</i> in the config for module: " + this.name + ".";
-			wrapper.className = "dimmed light";
+			wrapper.className = "dimmed light small";
 			return wrapper;
 		}
 
@@ -144,35 +148,35 @@ Module.register("hourlyforecast",{
 			minTempCell.className = "align-right min-temp";
 			row.appendChild(minTempCell);
 
-			if (this.config.showRainAmount) {
+			if (this.config.showRain_Snow) {
 				var rainCell = document.createElement("td");
 				if (isNaN(forecast.rain)) {
+					rainCell.className = "align-right shade";
 					rainCell.innerHTML = this.translate("No rain");
 				} else {
+					rainCell.className = "align-right rain";
 					if(config.units !== "imperial") {
 						rainCell.innerHTML = parseFloat(forecast.rain).toFixed(1).replace(".", this.config.decimalSymbol) + " l/m&sup3;";
 					} else {
 						rainCell.innerHTML = (parseFloat(forecast.rain) / 25.4).toFixed(2).replace(".", this.config.decimalSymbol) + " in";
 					}
 				}
-				rainCell.className = "align-right rain";
 				row.appendChild(rainCell);
-			}
 
-			var winter = moment().format("MM");
-    	    if ((winter >= "01" && winter <= "03") || (winter >= "11" && winter <= "12")) {
-				if (this.config.showSnowAmount) {
+				var winter = moment().format("MM");
+    	    	if ((winter >= "01" && winter <= "03") || (winter >= "11" && winter <= "12")) {
 					var snowCell = document.createElement("td");
 					if (isNaN(forecast.snow)) {
+						snowCell.className = "align-right shade";
 						snowCell.innerHTML = this.translate("No snow");
 					} else {
+						snowCell.className = "align-right snow";
 						if(config.units !== "imperial") {
 							snowCell.innerHTML = parseFloat(forecast.snow).toFixed(1).replace(".", this.config.decimalSymbol) + " mm";
 						} else {
 							snowCell.innerHTML = (parseFloat(forecast.snow) / 25.4).toFixed(2).replace(".", this.config.decimalSymbol) + " in";
 						}
 					}
-					snowCell.className = "align-right snow";
 					row.appendChild(snowCell);
 				}
 			}
@@ -193,15 +197,15 @@ Module.register("hourlyforecast",{
 		return table;
 	},
 
-	getHeader: function() {
+	getHeader: function () {
 		if (this.config.appendLocationNameToHeader) {
 			return this.data.header + " " + this.fetchedLocationName;
 		}
-		return this.data.header ? this.data.header : "";
+		return this.data.header;
 	},
 
 	notificationReceived: function(notification, payload, sender) {
-		if (notification === "DOM_OBJECTS_CREATED") {
+		if (notification === "Document Object Model created") {
 			if (this.config.appendLocationNameToHeader) {
 				this.hide(0, {lockString: this.identifier});
 			}
@@ -261,16 +265,18 @@ Module.register("hourlyforecast",{
 
 	getParams: function() {
 		var params = "?";
-		if(this.config.locationID) {
+		if (this.config.locationID) {
 			params += "id=" + this.config.locationID;
-		} else if(this.config.location) {
+		} else if (this.config.lat && this.config.lon) {
+			params += "lat=" + this.config.lat + "&lon=" + this.config.lon;
+		} else if (this.config.location) {
 			params += "q=" + this.config.location;
 		} else if (this.firstEvent && this.firstEvent.geo) {
 			params += "lat=" + this.firstEvent.geo.lat + "&lon=" + this.firstEvent.geo.lon;
 		} else if (this.firstEvent && this.firstEvent.location) {
 			params += "q=" + this.firstEvent.location;
 		} else {
-			this.hide(this.config.animationSpeed, {lockString:this.identifier});
+			this.hide(this.config.animationSpeed, { lockString: this.identifier });
 			return;
 		}
 
@@ -282,7 +288,7 @@ Module.register("hourlyforecast",{
 			numberOfDays = this.config.maxNumberOfDays < 1 || this.config.maxNumberOfDays > 17 ? 7 : this.config.maxNumberOfDays;
 		}
 		params += "&cnt=" + numberOfDays;
-
+		params += "&exclude=" + this.config.excludes;
 		params += "&units=" + this.config.units;
 		params += "&lang=" + this.config.lang;
 		params += "&APPID=" + this.config.appid;
@@ -297,21 +303,35 @@ Module.register("hourlyforecast",{
 		return data;
 	},
 
-	processWeather: function(data) {
-		this.fetchedLocationName = data.city.name + ", " + data.city.country;
+	processWeather: function (data) {
+		if (data.city) {
+			this.fetchedLocationName = data.city.name + ", " + data.city.country;
+		} else if (this.config.location) {
+			this.fetchedLocationName = this.config.location;
+		} else {
+			this.fetchedLocationName = "Unknown";
+		}
 
 		this.forecast = [];
 		var lastDay = null;
 		var forecastData = {};
+		var forecastList = null;
+		if (data.list) {
+			forecastList = data.list;
+		} else if (data.daily) {
+			forecastList = data.daily;
+		} else {
+			Log.error("Unexpected forecast data");
+			return undefined;
+		}
 
-		for (var i = 0, count = data.list.length; i < count; i++) {
-
-			var forecast = data.list[i];
-			this.parserDataWeather(forecast); // hack issue #1017
+		for (var i = 0, count = forecastList.length; i < count; i++) {
+			var forecast = forecastList[i];
+			forecast = this.parserDataWeather(forecast); // hack issue #1017
 
 			var day;
 			var hour;
-			if(!!forecast.dt_txt) {
+			if (forecast.dt_txt) {
 				day = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format(this.config.fullday);
 				hour = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format("H");
 			} else {
@@ -320,13 +340,13 @@ Module.register("hourlyforecast",{
 			}
 
 			if (day !== lastDay) {
-				var forecastData = {
+				forecastData = {
 					day: day,
 					icon: this.config.iconTable[forecast.weather[0].icon],
 					maxTemp: this.roundValue(forecast.temp.max),
 					minTemp: this.roundValue(forecast.temp.min),
-					rain: this.processRain(forecast, data.list),
-					snow: this.processSnow(forecast, data.list)
+					rain: this.processRain(forecast, forecastList),
+					snow: this.processSnow(forecast, forecastList),
 				};
 
 				this.forecast.push(forecastData);
@@ -336,19 +356,15 @@ Module.register("hourlyforecast",{
 					break;
 				}
 			} else {
-				//Log.log("Compare max: ", forecast.temp.max, parseFloat(forecastData.maxTemp));
 				forecastData.maxTemp = forecast.temp.max > parseFloat(forecastData.maxTemp) ? this.roundValue(forecast.temp.max) : forecastData.maxTemp;
-				//Log.log("Compare min: ", forecast.temp.min, parseFloat(forecastData.minTemp));
 				forecastData.minTemp = forecast.temp.min < parseFloat(forecastData.minTemp) ? this.roundValue(forecast.temp.min) : forecastData.minTemp;
-
-				if (hour >= 5 && hour <= 18) {
+				if (hour >= 6 && hour <= 18) {
 					forecastData.icon = this.config.iconTable[forecast.weather[0].icon];
 				}
 			}
 		}
 
-		//Log.log(this.forecast);
-		this.show(this.config.animationSpeed, {lockString:this.identifier});
+		this.show(this.config.animationSpeed, { lockString: this.identifier });
 		this.loaded = true;
 		this.updateDom(this.config.animationSpeed);
 	},
@@ -388,21 +404,25 @@ Module.register("hourlyforecast",{
 			return forecast.rain;
 		}
 
-		var checkDateTime = (!!forecast.dt_txt) ? moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss") : moment(forecast.dt, "X");
-		var daysForecasts = allForecasts.filter(function(item) {
-			var itemDateTime = (!!item.dt_txt) ? moment(item.dt_txt, "YYYY-MM-DD hh:mm:ss") : moment(item.dt, "X");
+		var checkDateTime = forecast.dt_txt ? moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss") : moment(forecast.dt, "X");
+		var daysForecasts = allForecasts.filter(function (item) {
+			var itemDateTime = item.dt_txt ? moment(item.dt_txt, "YYYY-MM-DD hh:mm:ss") : moment(item.dt, "X");
 			return itemDateTime.isSame(checkDateTime, "day") && item.rain instanceof Object;
 		});
 
+		//If no rain this day return undefined so it wont be displayed for this day
 		if (daysForecasts.length === 0) {
 			return undefined;
 		}
 
-		return daysForecasts.map(function(item) {
-			return Object.values(item.rain)[0];
-		}).reduce(function(a, b) {
-			return a + b;
-		}, 0);
+		//Summarize all the rain from the matching days
+		return daysForecasts
+			.map(function (item) {
+				return Object.values(item.rain)[0];
+			})
+			.reduce(function (a, b) {
+				return a + b;
+			}, 0);
 	},
 
 	processSnow: function(forecast, allForecasts) {
@@ -410,20 +430,24 @@ Module.register("hourlyforecast",{
 			return forecast.snow;
 		}
 
-		var checkDateTime = (!!forecast.dt_txt) ? moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss") : moment(forecast.dt, "X");
-		var daysForecasts = allForecasts.filter(function(item) {
-			var itemDateTime = (!!item.dt_txt) ? moment(item.dt_txt, "YYYY-MM-DD hh:mm:ss") : moment(item.dt, "X");
+		var checkDateTime = forecast.dt_txt ? moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss") : moment(forecast.dt, "X");
+		var daysForecasts = allForecasts.filter(function (item) {
+			var itemDateTime = item.dt_txt ? moment(item.dt_txt, "YYYY-MM-DD hh:mm:ss") : moment(item.dt, "X");
 			return itemDateTime.isSame(checkDateTime, "day") && item.snow instanceof Object;
 		});
 
+		//If no rain this day return undefined so it wont be displayed for this day
 		if (daysForecasts.length === 0) {
 			return undefined;
 		}
 
-		return daysForecasts.map(function(item) {
-			return Object.values(item.snow)[0];
-		}).reduce(function(a, b) {
-			return a + b;
-		}, 0);
+		//Summarize all the rain from the matching days
+		return daysForecasts
+			.map(function (item) {
+				return Object.values(item.snow)[0];
+			})
+			.reduce(function (a, b) {
+				return a + b;
+			}, 0);
 	}
 });
