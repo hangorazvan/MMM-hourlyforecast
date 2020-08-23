@@ -60,6 +60,13 @@ Module.register("hourlyforecast",{
 	firstEvent: true,
 	fetchedLocationName: config.location,
 
+	getTranslations: function() {
+		return {
+			en: "en.json",
+			ro: "ro.json",
+		};
+	},
+
 	start: function() {
 		Log.info("Starting module: " + this.name);
 		moment.locale(config.language);
@@ -67,13 +74,6 @@ Module.register("hourlyforecast",{
 		this.loaded = false;
 		this.scheduleUpdate(this.config.initialLoadDelay);
 		this.updateTimer = null;
-	},
-
-	getTranslations: function() {
-		return {
-			en: "en.json",
-			ro: "ro.json",
-		};
 	},
 
 	getDom: function() {
