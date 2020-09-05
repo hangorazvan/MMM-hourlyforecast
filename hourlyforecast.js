@@ -79,7 +79,7 @@ Module.register("hourlyforecast",{
 	getDom: function() {
 		var wrapper = document.createElement("div");
 
-		if (this.config.appid === "") {
+		if (this.config.appid === "" || this.config.appid === "YOUR_OPENWEATHER_API_KEY") {
 			wrapper.innerHTML = "Please set the correct openweather <i>appid</i> in the config for module: " + this.name + ".";
 			wrapper.className = "dimmed light small";
 			return wrapper;
@@ -199,9 +199,11 @@ Module.register("hourlyforecast",{
 
 	getHeader: function () {
 		if (this.config.appendLocationNameToHeader) {
-			return this.data.header + " " + this.fetchedLocationName;
+			if (this.data.header) return this.data.header + " " + this.fetchedLocationName;
+			else return this.fetchedLocationName;
 		}
-		return this.data.header;
+
+		return this.data.header ? this.data.header : "";
 	},
 
 	notificationReceived: function(notification, payload, sender) {
