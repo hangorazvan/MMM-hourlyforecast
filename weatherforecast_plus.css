@@ -1,106 +1,106 @@
-.hourlyforecast table {
+.weatherforecast_plus table {
   font-size: 1rem;
   line-height: 1.3rem;
 }
 
-.hourlyforecast table td {
+.weatherforecast_plus table td {
 	padding: 0;
 }
 
-.hourlyforecast .day {
+.weatherforecast_plus .day {
 	text-align: left;
 	min-width: 45px;
 	max-width: 55px;
 }
 
-.hourlyforecast .weather-icon {
+.weatherforecast_plus .weather-icon {
 	min-width: 40px;
 	max-width: 50px;
 	text-align: center;
 }
 
-.hourlyforecast tr.colored .max-temp {
+.weatherforecast_plus tr.colored .max-temp {
 	min-width: 60px;
 	max-width: 75px;
 	color: tomato;
 }
 
-.hourlyforecast tr.colored .min-temp {
+.weatherforecast_plus tr.colored .min-temp {
 	min-width: 60px;
 	max-width: 75px;
 	color: skyblue;
 }
 
-.hourlyforecast .shade {
+.weatherforecast_plus .shade {
 	min-width: 70px;
 	max-width: 90px;
 	color: gray;
 }
 
-.hourlyforecast table tr:nth-child(1) td:nth-child(1) {
+.weatherforecast_plus table tr:nth-child(1) td:nth-child(1) {
 	color: lime;
 }
 
-.hourlyforecast .wi-day-sunny {
+.weatherforecast_plus .wi-day-sunny {
     color: orange;
 }
 
-.hourlyforecast .wi-day-cloudy {
+.weatherforecast_plus .wi-day-cloudy {
     color: darkkhaki;
 }
 
-.hourlyforecast .wi-cloudy-windy {
+.weatherforecast_plus .wi-day-cloudy-windy {
     color: skyblue;
 }
 
-.hourlyforecast .wi-cloudy {
+.weatherforecast_plus .wi-cloudy {
     color: powderblue;
 }
 
-.hourlyforecast .wi-showers {
+.weatherforecast_plus .wi-day-showers {
     color: skyblue;
 }
 
-.hourlyforecast .wi-rain {
+.weatherforecast_plus .wi-day-rain {
     color: dodgerblue;
 }
 
-.hourlyforecast .wi-thunderstorm {
+.weatherforecast_plus .wi-day-thunderstorm {
     color: royalblue;
 }
 
-.hourlyforecast .wi-snow {
+.weatherforecast_plus .wi-day-snow {
     color: snow;
 }
 
-.hourlyforecast .wi-fog {
+.weatherforecast_plus .wi-day-fog {
     color: white;
 }
 
-.hourlyforecast .wi-night-clear {
+.weatherforecast_plus .wi-night-clear {
     color: white;
 }
 
-.hourlyforecast .wi-night-cloudy {
+.weatherforecast_plus .wi-night-cloudy {
     color: powderblue;
 }
 
-.hourlyforecast .wi-night-showers {
+.weatherforecast_plus .wi-night-showers {
     color: dodgerblue;
 }
 
-.hourlyforecast .wi-night-rain {
+.weatherforecast_plus .wi-night-rain {
     color: dodgerblue;
 }
 
-.hourlyforecast .wi-night-thunderstorm {
+.weatherforecast_plus .wi-night-thunderstorm {
     color: royalblue;
 }
 
-.hourlyforecast .wi-night-snow {
+.weatherforecast_plus .wi-night-snow {
     color: snow;
 }
 
-.hourlyforecast .wi-night-alt-cloudy-windy {
+.weatherforecast_plus .wi-night-alt-cloudy-windy {
     color: skyblue;
 }
