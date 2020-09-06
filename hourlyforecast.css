@@ -1,46 +1,44 @@
-.hourlyforecast .day {
-  text-align: left;
-}
-
-.hourlyforecast .weather-icon {
-  text-align: center;
-}
-
-.hourlyforecast .min-temp {
-}
-
-.hourlyforecast .rain {
-  color: gray;
-}
-
-.hourlyforecast .snow {
-  color: gray;
-}
-
 .hourlyforecast table {
   font-size: 1rem;
   line-height: 1.3rem;
 }
 
-.hourlyforecast tr.colored .min-temp {
-  color: skyblue;
+.hourlyforecast table td {
+	padding: 0;
+}
+
+.hourlyforecast .day {
+	text-align: left;
+	min-width: 45px;
+	max-width: 55px;
+}
+
+.hourlyforecast .weather-icon {
+	min-width: 40px;
+	max-width: 50px;
+	text-align: center;
 }
 
 .hourlyforecast tr.colored .max-temp {
-  color: tomato;
+	min-width: 60px;
+	max-width: 75px;
+	color: tomato;
 }
 
-.hourlyforecast tr:nth-child(1) td:nth-child(1) {
-  text-indent: -9999px;
-  line-height: 0;
+.hourlyforecast tr.colored .min-temp {
+	min-width: 60px;
+	max-width: 75px;
+	color: skyblue;
 }
 
-.hourlyforecast tr:nth-child(1) td:nth-child(1)::after {
-  text-indent: 0;
-  content: "Now";
-  display: block;
-  line-height: initial;
-  color: lime;
+.hourlyforecast .shade {
+	min-width: 70px;
+	max-width: 90px;
+	color: gray;
+}
+
+.hourlyforecast table tr:nth-child(1) td:nth-child(1) {
+	color: lime;
 }
 
 .hourlyforecast .wi-day-sunny {
@@ -48,7 +46,7 @@
 }
 
 .hourlyforecast .wi-day-cloudy {
-    color: DarkKhaki;
+    color: darkkhaki;
 }
 
 .hourlyforecast .wi-cloudy-windy {
