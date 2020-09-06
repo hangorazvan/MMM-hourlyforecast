@@ -1,0 +1,106 @@
+.hourlyforecast table {
+  font-size: 1rem;
+  line-height: 1.3rem;
+}
+
+.hourlyforecast table td {
+	padding: 0;
+}
+
+.hourlyforecast .day {
+	text-align: left;
+	min-width: 45px;
+	max-width: 55px;
+}
+
+.hourlyforecast .weather-icon {
+	min-width: 40px;
+	max-width: 50px;
+	text-align: center;
+}
+
+.hourlyforecast tr.colored .max-temp {
+	min-width: 60px;
+	max-width: 75px;
+	color: tomato;
+}
+
+.hourlyforecast tr.colored .min-temp {
+	min-width: 60px;
+	max-width: 75px;
+	color: skyblue;
+}
+
+.hourlyforecast .shade {
+	min-width: 70px;
+	max-width: 90px;
+	color: gray;
+}
+
+.hourlyforecast table tr:nth-child(1) td:nth-child(1) {
+	color: lime;
+}
+
+.hourlyforecast .wi-day-sunny {
+    color: orange;
+}
+
+.hourlyforecast .wi-day-cloudy {
+    color: darkkhaki;
+}
+
+.hourlyforecast .wi-cloudy-windy {
+    color: skyblue;
+}
+
+.hourlyforecast .wi-cloudy {
+    color: powderblue;
+}
+
+.hourlyforecast .wi-showers {
+    color: skyblue;
+}
+
+.hourlyforecast .wi-rain {
+    color: dodgerblue;
+}
+
+.hourlyforecast .wi-thunderstorm {
+    color: royalblue;
+}
+
+.hourlyforecast .wi-snow {
+    color: snow;
+}
+
+.hourlyforecast .wi-fog {
+    color: white;
+}
+
+.hourlyforecast .wi-night-clear {
+    color: white;
+}
+
+.hourlyforecast .wi-night-cloudy {
+    color: powderblue;
+}
+
+.hourlyforecast .wi-night-showers {
+    color: dodgerblue;
+}
+
+.hourlyforecast .wi-night-rain {
+    color: dodgerblue;
+}
+
+.hourlyforecast .wi-night-thunderstorm {
+    color: royalblue;
+}
+
+.hourlyforecast .wi-night-snow {
+    color: snow;
+}
+
+.hourlyforecast .wi-night-alt-cloudy-windy {
+    color: skyblue;
+}
