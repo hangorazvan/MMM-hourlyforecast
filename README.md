@@ -4,7 +4,7 @@ Modified MagicMirror2 weatherforecast with hourly forecast falls back and onecal
 
 https://forum.magicmirror.builders/topic/12201/snow-amount-on-weather-forecast
 
-<img src=https://github.com/hangorazvan/hourlyforecast/blob/master/preview.png>
+<img src=https://github.com/hangorazvan/weatherforecast_plus/blob/master/preview.png>
 Do not make modification and do not replace the default, just add <i>disable: true</i> in config.js and use this one as 3rd party,
 
 Then put in config.js
