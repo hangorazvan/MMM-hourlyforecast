@@ -1,4 +1,4 @@
-# weatherforecast plus
+# forecast plus
 
 Modified MagicMirror2 weatherforecast with hourly forecast falls back and onecall enpoint option, including snow amount only for winter mounths
 
