@@ -103,6 +103,11 @@ Module.register("forecast_plus",{
 			wrapper.innerHTML = this.translate("LOADING");
 			wrapper.className = "dimmed light small";
 			return wrapper;
+
+			var self = this;
+			setTimeout(function () {
+				self.updateWeather();
+			}, this.config.retryDelay);
 		}
 
 		var table = document.createElement("table");
