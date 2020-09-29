@@ -21,6 +21,7 @@ Module.register("forecast_plus",{
 
 		initialLoadDelay: 2500, // 2.5 seconds delay. This delay is used to keep the OpenWeather API happy.
 		retryDelay: 2500,
+		reload: false,
 
 		apiVersion: "2.5",
 		apiBase: "https://api.openweathermap.org/data/",
@@ -102,12 +103,12 @@ Module.register("forecast_plus",{
 		if (!this.loaded) {
 			wrapper.innerHTML = this.translate("LOADING");
 			wrapper.className = "dimmed light small";
-			return wrapper;
+			
+			if (this.config.reload) {
+				this.scheduleUpdate(this.config.initialLoadDelay);
+			}
 
-			var self = this;
-			setTimeout(function () {
-				self.updateWeather();
-			}, this.config.retryDelay);
+			return wrapper;
 		}
 
 		var table = document.createElement("table");
