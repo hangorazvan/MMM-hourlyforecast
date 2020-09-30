@@ -28,7 +28,7 @@ Module.register("forecast_plus",{
 		forecastEndpoint: "forecast",	// forecast/daily or onecall
 		excludes: false,
 
-		fullday: "HH [h]" // "ddd" for forecast/daily
+		fullday: "HH [h]", // "ddd" for forecast/daily
 
 		appendLocationNameToHeader: false,
 		calendarClass: "calendar",
@@ -58,25 +58,20 @@ Module.register("forecast_plus",{
 		},
 	},
 
-	firstEvent: true,
-	fetchedLocationName: config.location,
+	firstEvent: false,
 
-	getScripts: function () {
-		return []; 				// not need of moment.js if you have clock module by default
+	// create a variable to hold the location name based on the API result.
+	fetchedLocationName: "",
+
+	// Define required translations.
+	getTranslations: function () {
+		// The translations for the default modules are defined in the core translation files.
+		// Therefor we can just return false. Otherwise we should have returned a dictionary.
+		// If you're trying to build your own module including translations, check out the documentation.
+		return false;
 	},
 
-	// Define required scripts.
-	getStyles: function () {
-		return ["weather-icons.css", "forecast_plus.css"];
-	},
-
-	getTranslations: function() {
-		return {
-			en: "en.json",
-			ro: "ro.json",
-		};
-	},
-
+	// Define start sequence.
 	start: function () {
 		Log.info("Starting module: " + this.name);
 
@@ -103,7 +98,7 @@ Module.register("forecast_plus",{
 		if (!this.loaded) {
 			wrapper.innerHTML = this.translate("LOADING");
 			wrapper.className = "dimmed light small";
-			
+
 			if (this.config.reload) {
 				this.scheduleUpdate(this.config.initialLoadDelay);
 			}
@@ -175,27 +170,40 @@ Module.register("forecast_plus",{
 					rainCell.innerHTML = this.translate("No rain");
 				} else {
 					if (config.units !== "imperial") {
-						rainCell.innerHTML = parseFloat(forecast.rain).toFixed(1).replace(".", this.config.decimalSymbol) + " mm";
+						rainCell.innerHTML = "<i class=\"wi wi-umbrella skyblue\"></i>&nbsp;" + parseFloat(forecast.rain).toFixed(1).replace(".", this.config.decimalSymbol) + " mm";
 					} else {
-						rainCell.innerHTML = (parseFloat(forecast.rain) / 25.4).toFixed(2).replace(".", this.config.decimalSymbol) + " in";
+						rainCell.innerHTML = "<i class=\"wi wi-umbrella skyblue\"></i>&nbsp;" + (parseFloat(forecast.rain) / 25.4).toFixed(2).replace(".", this.config.decimalSymbol) + " in";
 					}
 				}
 				rainCell.className = "align-right bright rain";
 				row.appendChild(rainCell);
 			}
 
+
+
+//				if ((isNaN(this.rain)) || (isNaN(this.snow))) {
+//					rains.innerHTML = "&nbsp; <i class=\"wi wi-small-craft-advisory lime\"></i>&nbsp;" + this.translate("No rain");
+//				} else if (isNaN(this.rain)) {
+//					rains.innerHTML = "&nbsp; <i class=\"wi wi-snowflake-cold lightblue\"></i>&nbsp;" + this.snow.toFixed(1).replace(".", this.config.decimalSymbol) + "&nbsp;mm";
+//				} else if (isNaN(this.snow)) {
+//					rains.innerHTML = "&nbsp; <i class=\"wi wi-umbrella yellow\"></i>&nbsp;" + this.rain.toFixed(1).replace(".", this.config.decimalSymbol) + "&nbsp;mm";
+//				}
+
+
+
+
 			if (this.config.showSnowAmount) {
-				var winter = moment().format("M");
-				if ((winter >= "1" && winter <= "3") || (winter >= "11" && winter <= "12")) {
+				var winter = moment().format("MM");
+				if ((winter >= "01" && winter <= "03") || (winter >= "11" && winter <= "12")) {
 					var snowCell = document.createElement("td");
 					if (isNaN(forecast.snow)) {
 						snowCell.className = "align-right shade";
 						snowCell.innerHTML = this.translate("No snow");
 					} else {
 						if(config.units !== "imperial") {
-							snowCell.innerHTML = parseFloat(forecast.snow).toFixed(1).replace(".", this.config.decimalSymbol) + " mm";
+							snowCell.innerHTML = "<i class=\"wi wi-snowflake-cold lightblue\"></i>" + parseFloat(forecast.snow).toFixed(1).replace(".", this.config.decimalSymbol) + " mm";
 						} else {
-							snowCell.innerHTML = (parseFloat(forecast.snow) / 25.4).toFixed(2).replace(".", this.config.decimalSymbol) + " in";
+							snowCell.innerHTML = "<i class=\"wi wi-snowflake-cold lightblue\"></i>" + (parseFloat(forecast.snow) / 25.4).toFixed(2).replace(".", this.config.decimalSymbol) + " in";
 						}
 					}
 					snowCell.className = "align-right bright snow";
@@ -320,7 +328,7 @@ Module.register("forecast_plus",{
 		if (this.config.forecastEndpoint === "forecast") {
 			numberOfDays = this.config.maxNumberOfDays < 1 || this.config.maxNumberOfDays > 5 ? 5 : this.config.maxNumberOfDays;
 			// don't get forecasts for the next day, as it would not represent the whole day
-			numberOfDays = numberOfDays * 8 - (Math.round(new Date().getHours() / 3) % 8);
+		//	numberOfDays = numberOfDays * 8 - (Math.round(new Date().getHours() / 3) % 8);
 		} else {
 			numberOfDays = this.config.maxNumberOfDays < 1 || this.config.maxNumberOfDays > 17 ? 7 : this.config.maxNumberOfDays;
 		}
