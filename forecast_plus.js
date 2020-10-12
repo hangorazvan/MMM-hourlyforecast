@@ -418,12 +418,13 @@ Module.register("forecast_plus",{
 			this.show(this.config.animationSpeed, { lockString: this.identifier });
 			this.loaded = true;
 			this.updateDom(this.config.animationSpeed);
-		} else {
+		} 
+/*		else {	// only if not working
 			this.show(this.config.animationSpeed, { lockString: this.identifier });
 			this.loaded = true;
 			this.updateDom(this.config.animationSpeed);
 		}
-
+*/
 	},
 
 	/* scheduleUpdate()
