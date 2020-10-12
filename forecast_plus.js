@@ -108,11 +108,6 @@ Module.register("forecast_plus",{
 		if (!this.loaded) {
 			wrapper.innerHTML = this.translate("LOADING");
 			wrapper.className = "dimmed light small";
-
-			if (this.config.reload) {
-				this.scheduleUpdate(this.config.initialLoadDelay);
-			}
-
 			return wrapper;
 		}
 
@@ -177,35 +172,22 @@ Module.register("forecast_plus",{
 				var rainCell = document.createElement("td");
 				if (isNaN(forecast.rain)) {
 					rainCell.className = "align-right shade";
-					rainCell.innerHTML = this.translate("No rain");
+					rainCell.innerHTML = this.translate("No rain") + " &nbsp;<i class=\"wi wi-raindrop olive\"></i>&nbsp;" // this.translate("No rain");
+				} else if (!isNaN(forecast.snow)) {
+					if(config.units !== "imperial") {
+						rainCell.innerHTML = parseFloat(forecast.snow).toFixed(1).replace(".", this.config.decimalSymbol) + " mm <i class=\"wi wi-snowflake-cold lightblue\"></i>";
+					} else {
+						rainCell.innerHTML = (parseFloat(forecast.snow) / 25.4).toFixed(2).replace(".", this.config.decimalSymbol) + " in <i class=\"wi wi-snowflake-cold lightblue\"></i>";
+					}
 				} else {
 					if (config.units !== "imperial") {
-						rainCell.innerHTML = "<i class=\"wi wi-umbrella skyblue\"></i>&nbsp;" + parseFloat(forecast.rain).toFixed(1).replace(".", this.config.decimalSymbol) + " mm";
+						rainCell.innerHTML = parseFloat(forecast.rain).toFixed(1).replace(".", this.config.decimalSymbol) + " mm &nbsp;<i class=\"wi wi-umbrella skyblue\"></i>";
 					} else {
-						rainCell.innerHTML = "<i class=\"wi wi-umbrella skyblue\"></i>&nbsp;" + (parseFloat(forecast.rain) / 25.4).toFixed(2).replace(".", this.config.decimalSymbol) + " in";
+						rainCell.innerHTML = (parseFloat(forecast.rain) / 25.4).toFixed(2).replace(".", this.config.decimalSymbol) + " in &nbsp;<i class=\"wi wi-umbrella skyblue\"></i>";
 					}
-				}
+				} 
 				rainCell.className = "align-right bright rain";
 				row.appendChild(rainCell);
-			}
-
-			if (this.config.showSnowAmount) {
-				var winter = moment().format("MM");
-				if ((winter >= "01" && winter <= "03") || (winter >= "11" && winter <= "12")) {
-					var snowCell = document.createElement("td");
-					if (isNaN(forecast.snow)) {
-						snowCell.className = "align-right shade";
-						snowCell.innerHTML = this.translate("No snow");
-					} else {
-						if(config.units !== "imperial") {
-							snowCell.innerHTML = "<i class=\"wi wi-snowflake-cold lightblue\"></i>" + parseFloat(forecast.snow).toFixed(1).replace(".", this.config.decimalSymbol) + " mm";
-						} else {
-							snowCell.innerHTML = "<i class=\"wi wi-snowflake-cold lightblue\"></i>" + (parseFloat(forecast.snow) / 25.4).toFixed(2).replace(".", this.config.decimalSymbol) + " in";
-						}
-					}
-					snowCell.className = "align-right bright snow";
-					row.appendChild(snowCell);
-				}
 			}
 
 			if (this.config.fade && this.config.fadePoint < 1) {
@@ -325,13 +307,14 @@ Module.register("forecast_plus",{
 		if (this.config.forecastEndpoint === "forecast") {
 			numberOfDays = this.config.maxNumberOfDays < 1 || this.config.maxNumberOfDays > 5 ? 5 : this.config.maxNumberOfDays;
 			// don't get forecasts for the next day, as it would not represent the whole day
-			if (self.config.forecastEndpoint === "forecast/daily") {
+			if (this.config.fallBack) {
 				numberOfDays = numberOfDays * 8 - (Math.round(new Date().getHours() / 3) % 8);
 			}
 		} else {
 			numberOfDays = this.config.maxNumberOfDays < 1 || this.config.maxNumberOfDays > 17 ? 7 : this.config.maxNumberOfDays;
 		}
 		params += "&cnt=" + numberOfDays;
+
 		params += "&exclude=" + this.config.excludes;
 		params += "&units=" + this.config.units;
 		params += "&lang=" + this.config.lang;
@@ -363,7 +346,7 @@ Module.register("forecast_plus",{
 		// Forcast16 (paid) API endpoint provides this data.  Onecall endpoint
 		// does not.
 		if (data.city) {
-			this.fetchedLocationName = data.city.name + ", " + data.city.country;
+			this.fetchedLocationName = data.city.name; // + ", " + data.city.country;
 		} else if (this.config.location) {
 			this.fetchedLocationName = this.config.location;
 		} else {
@@ -431,9 +414,16 @@ Module.register("forecast_plus",{
 		}
 
 		//Log.log(this.forecast);
-		this.show(this.config.animationSpeed, { lockString: this.identifier });
-		this.loaded = true;
-		this.updateDom(this.config.animationSpeed);
+		if (!this.hidden) {
+			this.show(this.config.animationSpeed, { lockString: this.identifier });
+			this.loaded = true;
+			this.updateDom(this.config.animationSpeed);
+		} else {
+			this.show(this.config.animationSpeed, { lockString: this.identifier });
+			this.loaded = true;
+			this.updateDom(this.config.animationSpeed);
+		}
+
 	},
 
 	/* scheduleUpdate()
