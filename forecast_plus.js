@@ -28,7 +28,6 @@ Module.register("forecast_plus",{
 		forecastEndpoint: "forecast",	// forecast/daily or onecall
 		excludes: false,
 
-		this_hidden: true,	// bad coding, only if not loading
 		fullday: "HH [h]", // "ddd" for forecast/daily
 
 		appendLocationNameToHeader: false,
@@ -415,16 +414,9 @@ Module.register("forecast_plus",{
 		}
 
 		//Log.log(this.forecast);
-		// bad coding, only if not loading
-		if (!this.hidden && !this.config.this_hidden) {
-			this.show(this.config.animationSpeed, { lockString: this.identifier });
-			this.loaded = true;
-			this.updateDom(this.config.animationSpeed);
-		} else if (this.config.this_hidden) {
-			this.show(this.config.animationSpeed, { lockString: this.identifier });
-			this.loaded = true;
-			this.updateDom(this.config.animationSpeed);
-		}
+		this.show(this.config.animationSpeed, { lockString: this.identifier });
+		this.loaded = true;
+		this.updateDom(this.config.animationSpeed);
 	},
 
 	/* scheduleUpdate()
