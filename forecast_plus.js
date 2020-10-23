@@ -21,14 +21,13 @@ Module.register("forecast_plus",{
 
 		initialLoadDelay: 2500, // 2.5 seconds delay. This delay is used to keep the OpenWeather API happy.
 		retryDelay: 2500,
-		reload: false,
 
 		apiVersion: "2.5",
 		apiBase: "https://api.openweathermap.org/data/",
 		forecastEndpoint: "forecast",	// forecast/daily or onecall
 		excludes: false,
 
-		fullday: "HH [h]", // "ddd" for forecast/daily
+		fullday: "HH [h]" // "ddd" for forecast/daily
 
 		appendLocationNameToHeader: false,
 		calendarClass: "calendar",
@@ -58,12 +57,9 @@ Module.register("forecast_plus",{
 		},
 	},
 
-	firstEvent: false,
-
-	// create a variable to hold the location name based on the API result.
+	firstEvent: true,
 	fetchedLocationName: config.location,
 
-	// Define required scripts.
 	getScripts: function () {
 		return ["moment.js"];
 	},
@@ -108,6 +104,12 @@ Module.register("forecast_plus",{
 		if (!this.loaded) {
 			wrapper.innerHTML = this.translate("LOADING");
 			wrapper.className = "dimmed light small";
+
+			var self = this;
+			setInterval(function () {
+				self.updateWeather();
+			}, this.config.updateInterval);
+
 			return wrapper;
 		}
 
@@ -124,7 +126,11 @@ Module.register("forecast_plus",{
 			table.appendChild(row);
 
 			var dayCell = document.createElement("td");
-			dayCell.className = "day";
+
+			if (config.language == "ro") {
+				dayCell.className = "day azi";
+			} else dayCell.className = "day";
+
 			dayCell.innerHTML = forecast.day;
 			row.appendChild(dayCell);
 
@@ -414,8 +420,10 @@ Module.register("forecast_plus",{
 		}
 
 		//Log.log(this.forecast);
-		this.show(this.config.animationSpeed, { lockString: this.identifier });
-		this.loaded = true;
+		if (!this.loaded) {
+			this.show(this.config.animationSpeed, { lockString: this.identifier });
+			this.loaded = true;
+		}
 		this.updateDom(this.config.animationSpeed);
 	},
 
