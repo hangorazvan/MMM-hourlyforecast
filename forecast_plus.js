@@ -362,6 +362,13 @@ Module.register("forecast_plus",{
 		this.forecast = [];
 		var lastDay = null;
 		var forecastData = {};
+		var dayStarts = 7;
+		var dayEnds = 18;
+
+		if (data.city && data.city.sunrise && data.city.sunset) {
+			dayStarts = new Date(moment.unix(data.city.sunrise).locale(config.language).format("YYYY/MM/DD HH:mm:ss")).getHours();
+			dayEnds = new Date(moment.unix(data.city.sunset).locale(config.language).format("YYYY/MM/DD HH:mm:ss")).getHours();
+		}
 
 		// Handle different structs between forecast16 and onecall endpoints
 		var forecastList = null;
@@ -382,10 +389,10 @@ Module.register("forecast_plus",{
 			var hour;
 			if (forecast.dt_txt) {
 				day = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format(this.config.fullday);
-				hour = moment(forecast.dt_txt, "YYYY-MM-DD hh:mm:ss").format("H");
+				hour = new Date(moment(forecast.dt_txt).locale(config.language).format("YYYY-MM-DD HH:mm:ss")).getHours();
 			} else {
 				day = moment(forecast.dt, "X").format("ddd");
-				hour = moment(forecast.dt, "X").format("H");
+				hour = new Date(moment(forecast.dt, "X")).getHours();
 			}
 
 			if (day !== lastDay) {
@@ -413,7 +420,7 @@ Module.register("forecast_plus",{
 
 				// Since we don't want an icon from the start of the day (in the middle of the night)
 				// we update the icon as long as it's somewhere during the day.
-				if (hour >= 6 && hour <= 18) {
+				if (hour > dayStarts && hour < dayEnds) {
 					forecastData.icon = this.config.iconTable[forecast.weather[0].icon];
 				}
 			}
