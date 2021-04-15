@@ -31,7 +31,7 @@ Module.register("forecast_plus",{
 
 		appendLocationNameToHeader: false,
 		calendarClass: "calendar",
-		tableClass: "xsmall",
+		tableClass: "small",
 
 		roundTemp: false,
 
