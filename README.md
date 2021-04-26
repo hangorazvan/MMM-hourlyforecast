@@ -15,7 +15,7 @@ Then put in config.js
 		position: "top_right",
 		config: {
 			locationID: false,		// set locationID to false when use onecall endpoint
-			forecastEndpoint: "forecast",	// forecast/daily or onecall
+			forecastEndpoint: "onecall",	// forecast/daily or onecall
 			fullday: "HH [h]", 		// "ddd" in case of onecall & daily forecast, falls back of using free API or "HH [h]" for hourly forecast
 			showRain_Snow: true, 		// snow show only in winter months
 							// See weatherforeast default module 'Configuration options' for more information.
