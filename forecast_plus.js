@@ -8,7 +8,7 @@ Module.register("forecast_plus",{
 		appid: "",
 		units: config.units,
 		maxNumberOfDays: 7,
-		showRain_Snow: true, // snow show only in winter months
+		showRainAmount: false, // snow show only in winter months
 		updateInterval: 10 * 60 * 1000, // every 10 minutes
 		animationSpeed: 1000,
 		timeFormat: config.timeFormat,
@@ -27,7 +27,8 @@ Module.register("forecast_plus",{
 		forecastEndpoint: "forecast",	// forecast/daily or onecall
 		excludes: false,
 
-		fullday: "HH [h]" // "ddd" for forecast/daily
+		fallBack: false,				// force to use fallback endpoint
+		fullday: "HH [h]",				// "ddd" for forecast/daily
 
 		appendLocationNameToHeader: false,
 		calendarClass: "calendar",
@@ -58,7 +59,7 @@ Module.register("forecast_plus",{
 	},
 
 	firstEvent: true,
-	fetchedLocationName: config.location,
+	fetchedLocationName: "",
 
 	getScripts: function () {
 		return ["moment.js"];
@@ -66,7 +67,7 @@ Module.register("forecast_plus",{
 
 	// Define required scripts.
 	getStyles: function () {
-		return ["weather-icons.css"];
+		return ["forecast_plus.css", "weather-icons.css"];
 	},
 
 	// Define required translations.
@@ -87,7 +88,6 @@ Module.register("forecast_plus",{
 		this.forecast = [];
 		this.loaded = false;
 		this.scheduleUpdate(this.config.initialLoadDelay);
-
 		this.updateTimer = null;
 	},
 
@@ -139,7 +139,7 @@ Module.register("forecast_plus",{
 			row.appendChild(iconCell);
 
 			var icon = document.createElement("span");
-			icon.className = "wi weathericon " + forecast.icon;
+			icon.className = "wi weathericon wi-" + forecast.icon;
 			iconCell.appendChild(icon);
 
 			var degreeLabel = "";
@@ -178,7 +178,7 @@ Module.register("forecast_plus",{
 				var rainCell = document.createElement("td");
 				if (isNaN(forecast.rain)) {
 					rainCell.className = "align-right shade";
-					rainCell.innerHTML = this.translate("No rain") + " &nbsp;<i class=\"wi wi-raindrop olive\"></i>&nbsp;" // this.translate("No rain");
+					rainCell.innerHTML = this.translate("No rain") + " &nbsp;<i class=\"wi wi-small-craft-advisory lime\"></i>&nbsp;" // this.translate("No rain");
 				} else if (!isNaN(forecast.snow)) {
 					if(config.units !== "imperial") {
 						rainCell.innerHTML = parseFloat(forecast.snow).toFixed(1).replace(".", this.config.decimalSymbol) + " mm <i class=\"wi wi-snowflake-cold lightblue\"></i>";
@@ -256,7 +256,7 @@ Module.register("forecast_plus",{
 			return;
 		}
 
-		var url = this.config.apiBase + this.config.apiVersion + "/" + this.config.forecastEndpoint + this.getParams();
+		var url = this.config.apiBase + this.config.apiVersion + this.config.forecastEndpoint + this.getParams();
 		var self = this;
 		var retry = true;
 
@@ -354,7 +354,7 @@ Module.register("forecast_plus",{
 		if (data.city) {
 			this.fetchedLocationName = data.city.name; // + ", " + data.city.country;
 		} else if (this.config.location) {
-			this.fetchedLocationName = this.config.location;
+			this.fetchedLocationName = config.location;
 		} else {
 			this.fetchedLocationName = "Unknown";
 		}
@@ -522,7 +522,7 @@ Module.register("forecast_plus",{
 			}, 0);
 	},
 
-	processSnow: function(forecast, allForecasts) {
+	processSnow: function (forecast, allForecasts) {
 		if (!isNaN(forecast.snow)) {
 			return forecast.snow;
 		}
