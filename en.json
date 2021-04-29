@@ -1,4 +1,43 @@
 {
+	"LOADING": "Loading &hellip;",
+
+	"YESTERDAY": "Yesterday",
+	"TODAY": "Today",
+	"TOMORROW": "Tomorrow",
+	"DAYAFTERTOMORROW": "In 2 days",
+
+	"Sunrise": "Sunrise",
+	"Sunset": "Sunset",
+
+	"Full Moon": "Full",
+	"New Moon": "New",
+
+	"NOW": "Now",
+
+	"DEW": "Dew point: ",
+	"UVI": "UV index: ",
+	"No prep": "No precip",
 	"No rain": "No rain",
-	"No snow": "No snow"
+	"No snow": "No snow",
+
+	"N": "N",
+	"NNE": "NNE",
+	"NE": "NE",
+	"ENE": "ENE",
+	"E": "E",
+	"ESE": "ESE",
+	"SE": "SE",
+	"SSE": "SSE",
+	"S": "S",
+	"SSW": "SSW",
+	"SW": "SW",
+	"WSW": "WSW",
+	"W": "W",
+	"WNW": "WNW",
+	"NW": "NW",
+	"NNW": "NNW",
+
+	"FEELS!": "Feels like: ",
+	"FEELS": "Feels like: {DEGREE}",
+	"PRECIP": "PoP"
 }

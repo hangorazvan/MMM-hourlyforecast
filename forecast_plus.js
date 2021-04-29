@@ -1,66 +1,75 @@
-Module.register("forecast_plus",{
-
+/* Magic Mirror
+ * Module: WeatherForecast
+ *
+ * By Michael Teeuw https://michaelteeuw.nl
+ * MIT Licensed.
+ */
+Module.register("forecast_plus", {
+	// Default module config.
 	defaults: {
-		location: false,
-		locationID: false, // set locationID to false when use onecall endpoint
-		lat: false,
-		lon: false,
-		appid: "",
+		location: config.location,
+		locationID: config.locationID,
+		lat: config.latitude,
+		lon: config.longitude,
+		appid: config.appid2,
 		units: config.units,
 		maxNumberOfDays: 7,
-		showRainAmount: false, // snow show only in winter months
+		showRainAmount: false,
 		updateInterval: 10 * 60 * 1000, // every 10 minutes
-		animationSpeed: 1000,
+		animationSpeed: config.animation,
 		timeFormat: config.timeFormat,
 		lang: config.language,
-		decimalSymbol: ".",
-		fade: false,
+		decimalSymbol: config.decimal,
+		fade: true,
 		fadePoint: 0.25, // Start on 1/4th of the list.
 		colored: true,
-		scale: true,
+		extra: true,
+		scale: config.scale,
 
 		initialLoadDelay: 2500, // 2.5 seconds delay. This delay is used to keep the OpenWeather API happy.
-		retryDelay: 2500,
+		retryDelay: config.delay,
 
-		apiVersion: "2.5",
-		apiBase: "https://api.openweathermap.org/data/",
-		forecastEndpoint: "forecast",	// forecast/daily or onecall
+		decimalSymbol: config.decimal,
+		apiVersion: config.apiVersion,
+		apiBase: config.apiBase,
+		forecastEndpoint: "/forecast/daily",
 		excludes: false,
 
-		fallBack: false,				// force to use fallback endpoint
-		fullday: "HH [h]",				// "ddd" for forecast/daily
-
-		appendLocationNameToHeader: false,
+		appendLocationNameToHeader: true,
 		calendarClass: "calendar",
 		tableClass: "small",
 
-		roundTemp: false,
+		roundTemp: config.roundTemp,
 
 		iconTable: {
-			"01d": "wi-day-sunny",
-			"02d": "wi-day-cloudy",
-			"03d": "wi-cloudy",
-			"04d": "wi-day-cloudy-windy",
-			"09d": "wi-day-showers",
-			"10d": "wi-day-rain",
-			"11d": "wi-day-thunderstorm",
-			"13d": "wi-day-snow",
-			"50d": "wi-day-fog",
-			"01n": "wi-night-clear",
-			"02n": "wi-night-cloudy",
-			"03n": "wi-night-cloudy",
-			"04n": "wi-night-cloudy",
-			"09n": "wi-night-showers",
-			"10n": "wi-night-rain",
-			"11n": "wi-night-thunderstorm",
-			"13n": "wi-night-snow",
-			"50n": "wi-night-alt-cloudy-windy"
-		},
+			"01d": "day-sunny",
+			"02d": "day-cloudy",
+			"03d": "cloudy",
+			"04d": "cloudy-windy",
+			"09d": "showers",
+			"10d": "rain",
+			"11d": "thunderstorm",
+			"13d": "snow",
+			"50d": "fog",
+			"01n": "night-clear",
+			"02n": "night-cloudy",
+			"03n": "night-cloudy",
+			"04n": "night-cloudy",
+			"09n": "night-showers",
+			"10n": "night-rain",
+			"11n": "night-thunderstorm",
+			"13n": "night-snow",
+			"50n": "night-alt-cloudy-windy"
+		}
 	},
 
+	// create a variable for the first upcoming calendar event. Used if no location is specified.
 	firstEvent: true,
-	fetchedLocationName: "",
 
+	// create a variable to hold the location name based on the API result.
+	fetchedLocationName: config.location,
+
+	// Define required scripts.
 	getScripts: function () {
 		return ["moment.js"];
 	},
@@ -72,10 +81,10 @@ Module.register("forecast_plus",{
 
 	// Define required translations.
 	getTranslations: function () {
-		// The translations for the default modules are defined in the core translation files.
-		// Therefor we can just return false. Otherwise we should have returned a dictionary.
-		// If you're trying to build your own module including translations, check out the documentation.
-		return false;
+		return {
+			en: "en.json",
+			ro: "ro.json"
+		};
 	},
 
 	// Define start sequence.
@@ -128,7 +137,7 @@ Module.register("forecast_plus",{
 			var dayCell = document.createElement("td");
 
 			if (config.language == "ro") {
-				dayCell.className = "day azi";
+				dayCell.className = "day";
 			} else dayCell.className = "day";
 
 			dayCell.innerHTML = forecast.day;
@@ -178,7 +187,7 @@ Module.register("forecast_plus",{
 				var rainCell = document.createElement("td");
 				if (isNaN(forecast.rain)) {
 					rainCell.className = "align-right shade";
-					rainCell.innerHTML = this.translate("No rain") + " &nbsp;<i class=\"wi wi-small-craft-advisory lime\"></i>&nbsp;" // this.translate("No rain");
+					rainCell.innerHTML = this.translate("No rain") + " <i class=\"fa fa-tint-slash lime\"></i>";
 				} else if (!isNaN(forecast.snow)) {
 					if(config.units !== "imperial") {
 						rainCell.innerHTML = parseFloat(forecast.snow).toFixed(1).replace(".", this.config.decimalSymbol) + " mm <i class=\"wi wi-snowflake-cold lightblue\"></i>";
@@ -187,13 +196,44 @@ Module.register("forecast_plus",{
 					}
 				} else {
 					if (config.units !== "imperial") {
-						rainCell.innerHTML = parseFloat(forecast.rain).toFixed(1).replace(".", this.config.decimalSymbol) + " mm &nbsp;<i class=\"wi wi-umbrella skyblue\"></i>";
+						rainCell.innerHTML = parseFloat(forecast.rain).toFixed(1).replace(".", this.config.decimalSymbol) + " mm &nbsp;<i class=\"fa fa-tint skyblue\"></i>&nbsp;";
 					} else {
-						rainCell.innerHTML = (parseFloat(forecast.rain) / 25.4).toFixed(2).replace(".", this.config.decimalSymbol) + " in &nbsp;<i class=\"wi wi-umbrella skyblue\"></i>";
+						rainCell.innerHTML = (parseFloat(forecast.rain) / 25.4).toFixed(2).replace(".", this.config.decimalSymbol) + " in &nbsp;<i class=\"fa fa-tint skyblue\"></i>&nbsp;";
 					}
 				} 
 				rainCell.className = "align-right bright rain";
 				row.appendChild(rainCell);
+			}
+
+			if (this.config.extra) {
+				var row = document.createElement("tr");
+				row.className = "extra";
+				table.appendChild(row);
+
+				var humidity = document.createElement("td");
+				humidity.innerHTML = "<i class=\"wi wi-humidity skyblue little\"></i> " + parseFloat(forecast.humidity).toFixed(1).replace(".", this.config.decimalSymbol) + "%";
+				humidity.className = "align-left humidity";
+				row.appendChild(humidity);
+
+				var feelsLike = document.createElement("td");
+				feelsLike.innerHTML = "<i class=\"wi wi-thermometer gold little\"></i> " + parseFloat(forecast.feelsLike).toFixed(1).replace(".", this.config.decimalSymbol) + degreeLabel;
+				feelsLike.className = "align-center feels_like";
+				row.appendChild(feelsLike);
+
+				var pressure = document.createElement("td");
+				pressure.innerHTML = "<i class=\"wi wi-barometer gold little\"></i> " + Math.round(forecast.pressure * 750.062 / 1000).toFixed(0).replace(".", this.config.decimalSymbol) + "Hg";
+				pressure.className = "pressure";
+				row.appendChild(pressure);
+
+				var dewPoint = document.createElement("td");
+				dewPoint.innerHTML = "<i class=\"wi wi-raindrop skyblue little\"></i> " + parseFloat(forecast.dewPoint).toFixed(1).replace(".", this.config.decimalSymbol) + degreeLabel;
+				dewPoint.className = "dewPoint";
+				row.appendChild(dewPoint);
+
+				var uvIndex = document.createElement("td");
+				uvIndex.innerHTML = "UVI " + parseFloat(forecast.uvIndex).toFixed(1).replace(".", this.config.decimalSymbol) + " <i class=\"wi wi-hot gold little\"></i>";
+				uvIndex.className = "uvIndex";
+				row.appendChild(uvIndex);
 			}
 
 			if (this.config.fade && this.config.fadePoint < 1) {
@@ -403,6 +443,11 @@ Module.register("forecast_plus",{
 					minTemp: this.roundValue(forecast.temp.min),
 					rain: this.processRain(forecast, forecastList),
 					snow: this.processSnow(forecast, forecastList),
+					feelsLike: this.roundValue(forecast.feels_like.day),
+					humidity: forecast.humidity,
+					pressure: forecast.pressure,
+					dewPoint: this.roundValue(forecast.dew_point),
+					uvIndex: forecast.uvi
 				};
 
 				this.forecast.push(forecastData);
