@@ -2,7 +2,7 @@
 
 https://github.com/hangorazvan/forecast_plus (under development)
 
-Modified MagicMirror2 weatherforecast with hourly forecast falls back and onecall enpoint option, including snow amount only for winter mounths
+Modified MagicMirror2 weatherforecast with hourly forecast falls back and onecall enpoint option
 
 https://forum.magicmirror.builders/topic/12201/snow-amount-on-weather-forecast
 
