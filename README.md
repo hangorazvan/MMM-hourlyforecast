@@ -20,6 +20,7 @@ Do not make modification and do not replace the default, just add <i>disable: tr
 			fallBack: false,			// force to use fallback endpoint
 			fullday: "HH [h]", 			// "ddd" in case of onecall & daily forecast, falls back of using free API or "HH [h]" for hourly forecast
 			showRainAmount: true, 			// snow show only in winter months
+			extra: false,
 								// See weatherforeast default module 'Configuration options' for more information.
 		}
 	}
@@ -36,6 +37,7 @@ daily forecast without fallback (5 days for free API, 16 days for registered API
 			fallBack: false,			// force to use fallback endpoint
 			fullday: "ddd", 			// "ddd" in case of onecall & daily forecast, falls back of using free API or "HH [h]" for hourly forecast
 			showRainAmount: true, 			// snow show only in winter months
+			extra: false,
 								// See weatherforeast default module 'Configuration options' for more information.
 		}
 	}
@@ -53,6 +55,7 @@ daily forecast with fallback (5 days)
 			fallBack: true,				// force to use fallback endpoint
 			fullday: "ddd", 			// "ddd" in case of onecall & daily forecast, falls back of using free API or "HH [h]" for hourly forecast
 			showRainAmount: true, 			// snow show only in winter months
+			extra: false,
 								// See weatherforeast default module 'Configuration options' for more information.
 		}
 	}
@@ -70,6 +73,7 @@ daily forecast with fallback (5 days)
 			fallBack: true,				// force to use fallback endpoint
 			fullday: "ddd", 			// "ddd" in case of onecall & daily forecast, falls back of using free API or "HH [h]" for hourly forecast
 			showRainAmount: true, 			// snow show only in winter months
+			extra: true,
 								// See weatherforeast default module 'Configuration options' for more information.
 		}
 	}
