@@ -1,6 +1,6 @@
 # forecast plus
 
-https://github.com/hangorazvan/forecast_plus
+https://github.com/hangorazvan/forecast_plus (under development)
 
 Modified MagicMirror2 weatherforecast with hourly forecast falls back and onecall enpoint option, including snow amount only for winter mounths
 
