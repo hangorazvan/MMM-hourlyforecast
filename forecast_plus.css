@@ -1,3 +1,5 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.12/css/weather-icons.min.css");
+
 .forecast_plus table tr:nth-child(1) .day:nth-child(1),
 .forecast_plus table tr:nth-child(2) .day:nth-child(1) {
   text-indent: -9999px;
