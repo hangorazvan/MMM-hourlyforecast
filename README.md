@@ -1,8 +1,9 @@
 # forecast plus
 
-https://github.com/hangorazvan/forecast_plus (under development)
+https://github.com/hangorazvan/forecast_plus
 
 Modified MagicMirror2 weatherforecast with hourly forecast falls back and onecall enpoint option
+<br>This module is no longer maintained, will not have any improvements or bug fixes.
 
 https://forum.magicmirror.builders/topic/12201/snow-amount-on-weather-forecast
 
