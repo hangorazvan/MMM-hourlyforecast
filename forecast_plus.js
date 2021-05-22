@@ -66,7 +66,7 @@ Module.register("forecast_plus", {
 	firstEvent: true,
 
 	// create a variable to hold the location name based on the API result.
-	fetchedLocationName: config.location,
+	fetchedLocationName: this.config.location,
 
 	// Define required scripts.
 	getScripts: function () {
