@@ -393,7 +393,7 @@ Module.register("forecast_plus", {
 		if (data.city) {
 			this.fetchedLocationName = data.city.name; // + ", " + data.city.country;
 		} else if (this.config.location) {
-			this.fetchedLocationName = config.location;
+			this.fetchedLocationName = this.config.location;
 		} else {
 			this.fetchedLocationName = "Unknown";
 		}
