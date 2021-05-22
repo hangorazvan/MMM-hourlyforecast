@@ -7,31 +7,30 @@
 Module.register("forecast_plus", {
 	// Default module config.
 	defaults: {
-		location: config.location,
-		locationID: config.locationID,
-		lat: config.latitude,
-		lon: config.longitude,
-		appid: config.appid2,
+		location: "",
+		locationID: "",
+		lat: "",
+		lon: "",
+		appid: "",
 		units: config.units,
 		maxNumberOfDays: 7,
 		showRainAmount: false,
 		updateInterval: 10 * 60 * 1000, // every 10 minutes
-		animationSpeed: config.animation,
+		animationSpeed: 1000,
 		timeFormat: config.timeFormat,
 		lang: config.language,
-		decimalSymbol: config.decimal,
 		fade: true,
 		fadePoint: 0.25, // Start on 1/4th of the list.
 		colored: true,
 		extra: true,
-		scale: config.scale,
+		degreeLabel: true,
 
 		initialLoadDelay: 2500, // 2.5 seconds delay. This delay is used to keep the OpenWeather API happy.
-		retryDelay: config.delay,
+		retryDelay: 2500,
 
-		decimalSymbol: config.decimal,
-		apiVersion: config.apiVersion,
-		apiBase: config.apiBase,
+		decimalSymbol: ".",
+		apiVersion: "2.5/",
+		apiBase: "https:://api.openweathermap.org/data/",
 		forecastEndpoint: "/forecast/daily",
 		excludes: false,
 
@@ -39,7 +38,7 @@ Module.register("forecast_plus", {
 		calendarClass: "calendar",
 		tableClass: "small",
 
-		roundTemp: config.roundTemp,
+		roundTemp: false,
 
 		iconTable: {
 			"01d": "day-sunny",
@@ -155,7 +154,7 @@ Module.register("forecast_plus", {
 			if (this.config.units === "metric" || this.config.units === "imperial") {
 				degreeLabel += "&deg;";
 			}
-			if (this.config.scale) {
+			if (this.config.degreeLabel) {
 				switch (this.config.units) {
 					case "metric":
 						degreeLabel += "C";
